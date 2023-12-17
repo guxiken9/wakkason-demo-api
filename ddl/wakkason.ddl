@@ -23,5 +23,5 @@ CREATE TABLE messages (
     message TEXT NOT NULL,
     photo_url TEXT,
     scheduled_time TIMESTAMP NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
