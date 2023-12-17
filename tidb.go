@@ -9,15 +9,15 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func createDB() *gorm.DB {
+func createDB() (*gorm.DB, error) {
 	db, err := gorm.Open(mysql.Open(getDSN()), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return db
+	return db, nil
 }
 
 func getDSN() string {
