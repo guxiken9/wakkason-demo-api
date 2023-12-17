@@ -2,6 +2,7 @@ package main
 
 import (
 	"log/slog"
+	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -31,19 +32,41 @@ type Message struct {
 	//CreatedAt *time.Time `json:"created_at" gorm:"column:created_at"`
 }
 
+func PostMessage(c *gin.Context) {
+	var message Message
+	if err := c.ShouldBindJSON(message); err != nil {
+		slog.Error("Message JSON Bind Error", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
+	db, err := createDB()
+	if err != nil {
+		slog.Error(err.Error())
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+
+	err = db.Create(message).Error
+	if err != nil {
+		slog.Error("User Find Error", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	c.JSON(http.StatusOK, nil)
+
+}
+
 func GetUsers(c *gin.Context) {
 
 	var users []User
 	db, err := createDB()
 	if err != nil {
-		slog.Error(err.Error())
-		c.JSON(500, nil)
+		slog.Error("DB Connection Error", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 	err = db.Find(&users).Error
 	if err != nil {
 		slog.Error("User Find Error", err)
-		c.JSON(500, nil)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
-	c.JSON(200, users)
+	c.JSON(http.StatusOK, nil)
 }

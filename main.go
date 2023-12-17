@@ -20,6 +20,7 @@ func Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.API
 		r.Use(gin.Recovery())
 
 		r.GET("/wakkason-demo-api/users", GetUsers)
+		r.POST("/wakkason-demo-api/message", PostMessage)
 		ginLambda = ginadapter.New(r)
 	}
 
