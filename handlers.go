@@ -11,26 +11,25 @@ import (
 type User struct {
 	ID       int    `json:"user_id" gorm:"primaryKey;column:user_id"`
 	Username string `json:"username" gorm:"column:username"`
-	//CreatedAt *time.Time `json:"created_at" gorm:"column:created_at"`
 }
 
 type Memory struct {
-	ID       int    `json:"memory_id" gorm:"primaryKey;column:memory_id"`
-	Title    string `json:"title" gorm:"column:title"`
-	Text     string `json:"text" gorm:"column:text"`
-	PhotoURL string `json:"photo_url" gorm:"column:photo_url"`
-	//CreatedAt *time.Time `json:"created_at" gorm:"column:created_at"`
+	ID        int       `json:"memory_id" gorm:"primaryKey;column:memory_id"`
+	Title     string    `json:"title" gorm:"column:title"`
+	Text      string    `json:"text" gorm:"column:text"`
+	PhotoURL  string    `json:"photo_url" gorm:"column:photo_url"`
+	CreatedAt time.Time `json:"created_at" gorm:"column:created_at"`
 }
 
 type Message struct {
-	ID            int        `json:"message_id" gorm:"primaryKey;column:message_id"`
-	ToUser        int        `json:"to_user" gorm:"column:to_User"`
-	FromUser      int        `json:"from_user" gorm:"column:from_User"`
-	Title         string     `json:"title" gorm:"column:title"`
-	Message       string     `json:"message" gorm:"column:message"`
-	PhotoURL      string     `json:"photo_url" gorm:"column:photo_url"`
-	ScheduledTime string     `json:"scheduled_time" gorm:"column:scheduled_time"`
-	CreatedAt     *time.Time `json:"created_at" gorm:"column:created_at"`
+	ID            int       `json:"message_id" gorm:"primaryKey;column:message_id"`
+	ToUser        int       `json:"to_user" gorm:"column:to_User"`
+	FromUser      int       `json:"from_user" gorm:"column:from_User"`
+	Title         string    `json:"title" gorm:"column:title"`
+	Message       string    `json:"message" gorm:"column:message"`
+	PhotoURL      string    `json:"photo_url" gorm:"column:photo_url"`
+	ScheduledTime time.Time `json:"scheduled_time" gorm:"column:scheduled_time"`
+	CreatedAt     time.Time `json:"created_at" gorm:"column:created_at"`
 }
 
 func PostMessage(c *gin.Context) {
