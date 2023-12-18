@@ -18,10 +18,11 @@ CREATE TABLE memories (
 
 CREATE TABLE messages (
     message_id INT PRIMARY KEY AUTO_INCREMENT,
-    notification_id INT NOT NULL,
+    to_user INT NOT NULL,
+    from_user INT NOT NULL,
     title TEXT NOT NULL,
     message TEXT NOT NULL,
     photo_url TEXT,
     scheduled_time TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
