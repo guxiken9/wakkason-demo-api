@@ -22,7 +22,9 @@ func Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.API
 		r.Use(cors.Default())
 
 		r.GET("/wakkason-demo-api/users", GetUsers)
+
 		r.POST("/wakkason-demo-api/message", PostMessage)
+		r.POST("/wakkason-demo-api/memory", PostMemory)
 		ginLambda = ginadapter.New(r)
 	}
 

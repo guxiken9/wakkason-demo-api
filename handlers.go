@@ -17,6 +17,7 @@ type Memory struct {
 	ID        int       `json:"memory_id" gorm:"primaryKey;column:memory_id"`
 	Title     string    `json:"title" gorm:"column:title"`
 	Text      string    `json:"text" gorm:"column:text"`
+	Image     string    `json:"image" gorm:"column:image"`
 	PhotoURL  string    `json:"photo_url" gorm:"column:photo_url"`
 	CreatedAt time.Time `json:"created_at" gorm:"column:created_at"`
 }
@@ -27,9 +28,32 @@ type Message struct {
 	FromUser      int       `json:"from_user" gorm:"column:from_User"`
 	Title         string    `json:"title" gorm:"column:title"`
 	Message       string    `json:"message" gorm:"column:message"`
+	Image         string    `json:"image" gorm:"column:image"`
 	PhotoURL      string    `json:"photo_url" gorm:"column:photo_url"`
 	ScheduledTime time.Time `json:"scheduled_time" gorm:"column:scheduled_time"`
 	CreatedAt     time.Time `json:"created_at" gorm:"column:created_at"`
+}
+
+func PostMemory(c *gin.Context) {
+	var memory Memory
+	if err := c.ShouldBindJSON(&memory); err != nil {
+		slog.Error("Message JSON Bind Error", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
+	db, err := createDB()
+	if err != nil {
+		slog.Error(err.Error())
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+
+	err = db.Create(&memory).Error
+	if err != nil {
+		slog.Error("User Find Error", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	c.JSON(http.StatusOK, nil)
+
 }
 
 func PostMessage(c *gin.Context) {
@@ -38,8 +62,6 @@ func PostMessage(c *gin.Context) {
 		slog.Error("Message JSON Bind Error", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-
-	slog.Info("Request ", message)
 
 	db, err := createDB()
 	if err != nil {

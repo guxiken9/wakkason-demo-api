@@ -12,6 +12,7 @@ CREATE TABLE memories (
     memory_id INT PRIMARY KEY AUTO_INCREMENT,
     title TEXT NOT NULL,
     text TEXT NOT NULL,
+    image TEXT,
     photo_url TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -22,6 +23,7 @@ CREATE TABLE messages (
     from_user INT NOT NULL,
     title TEXT NOT NULL,
     message TEXT NOT NULL,
+    image TEXT,
     photo_url TEXT,
     scheduled_time TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
