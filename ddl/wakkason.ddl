@@ -11,7 +11,7 @@ CREATE TABLE users (
 CREATE TABLE memories (
     memory_id INT PRIMARY KEY AUTO_INCREMENT,
     title TEXT NOT NULL,
-    text TEXT NOT NULL,
+    memory TEXT NOT NULL,
     image TEXT,
     photo_url TEXT,
     created_by INT NOT NULL,
