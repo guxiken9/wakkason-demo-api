@@ -44,10 +44,27 @@ func PostMemory(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
-	db, err := createDB()
+	db, err := CreateDB()
 	if err != nil {
 		slog.Error(err.Error())
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+
+	if memory.Image != "" {
+		b, err := DecodeBase64(memory.Image)
+		if err != nil {
+			slog.Error("Image Decode Error", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
+
+		r, err := PutImage(b)
+		if err != nil {
+			slog.Error("S3 Put Image Error", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
+
+		memory.PhotoOrignURL = r.Key
+		memory.PhotoURL = r.PreSignedURL
 	}
 
 	err = db.Create(&memory).Error
@@ -66,7 +83,7 @@ func PostMessage(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
-	db, err := createDB()
+	db, err := CreateDB()
 	if err != nil {
 		slog.Error(err.Error())
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -84,7 +101,7 @@ func PostMessage(c *gin.Context) {
 func GetUsers(c *gin.Context) {
 
 	var users []User
-	db, err := createDB()
+	db, err := CreateDB()
 	if err != nil {
 		slog.Error("DB Connection Error", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

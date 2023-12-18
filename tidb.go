@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func createDB() (*gorm.DB, error) {
+func CreateDB() (*gorm.DB, error) {
 	db, err := gorm.Open(mysql.Open(getDSN()), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
