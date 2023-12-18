@@ -13,6 +13,7 @@ CREATE TABLE memories (
     title TEXT NOT NULL,
     memory TEXT NOT NULL,
     image TEXT,
+    photo_origin_url TEXT,
     photo_url TEXT,
     created_by INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -25,6 +26,7 @@ CREATE TABLE messages (
     title TEXT NOT NULL,
     message TEXT NOT NULL,
     image TEXT,
+    photo_origin_url TEXT,
     photo_url TEXT,
     scheduled_time TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

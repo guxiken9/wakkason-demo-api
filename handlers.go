@@ -14,13 +14,14 @@ type User struct {
 }
 
 type Memory struct {
-	ID        int       `json:"memory_id" gorm:"primaryKey;column:memory_id"`
-	Title     string    `json:"title" gorm:"column:title"`
-	Memory    string    `json:"memory" gorm:"column:memory"`
-	Image     string    `json:"image" gorm:"column:image"`
-	PhotoURL  string    `json:"photo_url" gorm:"column:photo_url"`
-	CreatedBy int       `json:"created_by" gorm:"column:created_by"`
-	CreatedAt time.Time `json:"created_at" gorm:"column:created_at"`
+	ID            int       `json:"memory_id" gorm:"primaryKey;column:memory_id"`
+	Title         string    `json:"title" gorm:"column:title"`
+	Memory        string    `json:"memory" gorm:"column:memory"`
+	Image         string    `json:"image" gorm:"column:image"`
+	PhotoOrignURL string    `json:"photo_origin_url" gorm:"column:photo_origin_url"`
+	PhotoURL      string    `json:"photo_url" gorm:"column:photo_url"`
+	CreatedBy     int       `json:"created_by" gorm:"column:created_by"`
+	CreatedAt     time.Time `json:"created_at" gorm:"column:created_at"`
 }
 
 type Message struct {
@@ -30,6 +31,7 @@ type Message struct {
 	Title         string    `json:"title" gorm:"column:title"`
 	Message       string    `json:"message" gorm:"column:message"`
 	Image         string    `json:"image" gorm:"column:image"`
+	PhotoOrignURL string    `json:"photo_origin_url" gorm:"column:photo_origin_url"`
 	PhotoURL      string    `json:"photo_url" gorm:"column:photo_url"`
 	ScheduledTime time.Time `json:"scheduled_time" gorm:"column:scheduled_time"`
 	CreatedAt     time.Time `json:"created_at" gorm:"column:created_at"`
