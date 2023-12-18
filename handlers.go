@@ -68,5 +68,5 @@ func GetUsers(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
-	c.JSON(http.StatusOK, nil)
+	c.JSON(http.StatusOK, users)
 }
