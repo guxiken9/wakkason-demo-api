@@ -89,6 +89,23 @@ func PostMessage(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	}
 
+	if message.Image != "" {
+		b, err := DecodeBase64(message.Image)
+		if err != nil {
+			slog.Error("Image Decode Error", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
+
+		r, err := PutImage(b)
+		if err != nil {
+			slog.Error("S3 Put Image Error", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
+
+		message.PhotoOrignURL = r.Key
+		message.PhotoURL = r.PreSignedURL
+	}
+
 	err = db.Create(&message).Error
 	if err != nil {
 		slog.Error("User Find Error", err)
