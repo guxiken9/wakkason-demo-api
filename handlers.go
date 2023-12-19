@@ -33,7 +33,7 @@ type Message struct {
 	Image         string    `json:"image" gorm:"column:image"`
 	PhotoOrignURL string    `json:"photo_origin_url" gorm:"column:photo_origin_url"`
 	PhotoURL      string    `json:"photo_url" gorm:"column:photo_url"`
-	ScheduledTime time.Time `json:"scheduled_time" gorm:"column:scheduled_time"`
+	ScheduledTime time.Time `gorm:"column:scheduled_time"`
 	CreatedAt     time.Time `json:"created_at" gorm:"column:created_at"`
 }
 
@@ -105,6 +105,8 @@ func PostMessage(c *gin.Context) {
 		message.PhotoOrignURL = r.Key
 		message.PhotoURL = r.PreSignedURL
 	}
+
+	message.ScheduledTime = time.Now()
 
 	err = db.Create(&message).Error
 	if err != nil {
