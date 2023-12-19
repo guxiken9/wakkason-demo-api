@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"net/http"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -41,11 +42,16 @@ func PutImage(image []byte) (*Result, error) {
 		return nil, err
 	}
 
+	size := len(image)
+	fileType := http.DetectContentType(image)
+
 	var result Result
 	_, err = c.PutObject(&s3.PutObjectInput{
-		Bucket: aws.String(S3_BUCKET_NAME),
-		Key:    aws.String(key),
-		Body:   aws.ReadSeekCloser(bytes.NewReader(image)),
+		Bucket:        aws.String(S3_BUCKET_NAME),
+		Key:           aws.String(key),
+		Body:          aws.ReadSeekCloser(bytes.NewReader(image)),
+		ContentLength: aws.Int64(int64(size)),
+		ContentType:   aws.String(fileType),
 	})
 	if err != nil {
 		return nil, err
